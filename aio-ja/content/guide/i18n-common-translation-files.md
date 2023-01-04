@@ -33,7 +33,7 @@ XML Localization Interchange File Format \(XLIFF、バージョン1.2\)の詳細
 | コマンドオプション  | 詳細 |
 |:---             |:---     |
 | `--format`      | 出力ファイルのフォーマットを設定する    |
-| `--outFile`     | 出力ファイルのファイル名を設定する      |
+| `--out-file`     | 出力ファイルのファイル名を設定する      |
 | `--output-path` | 出力先ディレクトリのパスを設定する      |
 
 ### ソース言語ファイルの場所を変更する
@@ -74,7 +74,7 @@ XMBフォーマットでは、ソース言語ファイルとして`.xmb`が生�
 
 ### ソース言語ファイルのファイル名を変更する
 
-抽出ツールが生成するソース言語ファイルの名前を変更するには、`--outFile`コマンドオプションを使用します。
+抽出ツールが生成するソース言語ファイルの名前を変更するには、`--out-file`コマンドオプションを使用します。
 
 #### `extract-i18n --out-file`の例
 
@@ -138,7 +138,7 @@ XMBフォーマットでは、ソース言語ファイルとして`.xmb`が生�
 
     <code-example header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;)" path="i18n/doc-files/messages.fr.xlf.html" region="translated-hello-before"></code-example>
 
-    `id="introductionHeader` "は[カスタムID][AioGuideI18nOptionalManageMarkedText]ですが、ソースHTMLに必要な`@@`接頭辞はありません。
+    `id="introductionHeader` "は[カスタムID][AioGuideI18nOptionalManageMarkedText]ですが、ソースHTMLに必要な`@@`プレフィックスはありません。
 
 1.  テキストノード内の`<source>...</source>`要素を複製し、`target`に名前を変更し、内容をフランス語のテキストに置き換えます。
 

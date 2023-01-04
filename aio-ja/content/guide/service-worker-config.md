@@ -30,7 +30,7 @@ Unless otherwise commented, patterns use a **limited*** glob format that interna
 * `**`は、0個以上のパスセグメントに一致します。
 * `*`は、厳密に0個以上の`/`を除く文字に一致します。
 * `?` は、厳密に1個の`/`を除く文字に一致します。
-* `!`接頭辞は、パターンを否定的なものとしてマークします。つまり、パターンに一致しないファイルのみが含まれます。
+* `!`プレフィックスは、パターンを否定的なものとしてマークします。つまり、パターンに一致しないファイルのみが含まれます。
 
 <div class="alert is-helpful">
 
@@ -81,20 +81,28 @@ Unless otherwise commented, patterns use a **limited*** glob format that interna
 
 *Assets*は、アプリケーションとともに更新される、アプリケーションバージョンの一部であるリソースです。ページのオリジンドメインからロードされたリソースだけでなく、CDNや他の外部URLからロードされたサードパーティのリソースを含めることができます。ビルド時にこのような外部URLをすべて知っているわけではないので、URLパターンを照合することができます。
 
+<div class="alert is-important">
+
+  For the service worker to handle resources that are loaded from different origins, make sure that [CORS][MozillaDeveloperDocsWebHttpCors] is correctly configured on each origin's server.
+
+</div>
+
 このフィールドには、アセットリソースのセットとそれらがキャッシュされるポリシーを定義する、一連のアセットグループが含まれます。
 
-```json
+<code-example format="json" language="json">
+
 {
   "assetGroups": [
     {
-      ...
+      &hellip;
     },
     {
-      ...
+      &hellip;
     }
   ]
 }
-```
+
+</code-example>
 
 <div class="alert is-helpful">
 
@@ -248,7 +256,7 @@ A list of URL patterns. URLs that match these patterns are cached according to t
 
 **Required**
 
-`maxAge`パラメータは、レスポンスが無効であるとみなされる前にキャッシュに残ることが許される期間を示します。`maxAge`は、次の単位接尾辞を使用した継続時間文字列です。
+`maxAge`パラメータは、レスポンスが無効であるとみなされる前にキャッシュに残ることが許される期間を示します。`maxAge`は、次の単位サフィックスを使用した継続時間文字列です。
 
 * `d`: days
 * `h`: hours
@@ -260,7 +268,7 @@ A list of URL patterns. URLs that match these patterns are cached according to t
 
 ##### `timeout`
 
-この継続時間文字列は、ネットワークタイムアウトを指定します。ネットワークのタイムアウトは、キャッシュされたレスポンスが構成されている場合に、キャッシュされたレスポンスを使用する前にAngular Service Workerがネットワークが応答するまで待機する時間です。`timeout`は期間文字列で、次の単位接尾辞を使います。
+この継続時間文字列は、ネットワークタイムアウトを指定します。ネットワークのタイムアウトは、キャッシュされたレスポンスが構成されている場合に、キャッシュされたレスポンスを使用する前にAngular Service Workerがネットワークが応答するまで待機する時間です。`timeout`は期間文字列で、次の単位サフィックスを使います。
 
 * `d`: 日
 * `h`: 時間
@@ -328,14 +336,12 @@ See [assetGroups](#assetgroups) for details.
 Service Workerは、`asset`または`data`グループと一致しないナビゲーションリクエストを指定された[index file](#index-file)にリダイレクトします。次の場合、リクエストはナビゲーション要求とみなされます。
 
 
-1. [mode](https://developer.mozilla.org/en-US/docs/Web/API/Request/mode)が`navigation`である。
-2. `text/html`レスポンスを受け入れている（`Accept`ヘッダーの値によって決定されます）。
-3. URLが特定の基準に一致する（下記参照)。
-
-デフォルトでは、これらの基準は次のとおりです。
-
-1. URLの最後のパスセグメントにファイル拡張子（`.`）が含まれていないこと。
-2. URLに`__`を含まれていないこと。
+*   Its [method](https://developer.mozilla.org/docs/Web/API/Request/method) is `GET`
+*   Its [mode](https://developer.mozilla.org/docs/Web/API/Request/mode) is `navigation`
+*   It accepts a `text/html` response as determined by the value of the `Accept` header
+*   Its URL matches the following criteria:
+    *   The URL must not contain a file extension \(that is, a `.`\) in the last path segment
+    *   The URL must not contain `__`
 
 <div class="alert is-helpful">
 
@@ -398,6 +404,8 @@ It is recommended that you use the default performance strategy whenever possibl
 [GoogleDeveloperWebUpdates201503IntroductionToFetchResponseTypes]: https://developers.google.com/web/updates/2015/03/introduction-to-fetch#response_types
 
 [WhatwgFetchSpecConceptFilteredResponseOpaque]: https://fetch.spec.whatwg.org#concept-filtered-response-opaque
+
+[MozillaDeveloperDocsWebHttpCors]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 
 <!-- end links -->
 
